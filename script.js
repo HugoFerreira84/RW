@@ -1,266 +1,194 @@
-// Main Initialization
 document.addEventListener('DOMContentLoaded', () => {
-    initializeMenuToggle();
-    animateSections();
-    handleFormSubmission();
-    createStageElements();
-    initStageVisualizer();
-});
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const carousels = document.querySelectorAll('.carousel');
 
-// Menu Toggle
-const initializeMenuToggle = () => {
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+    let isDragging = false;
+    let startX, scrollLeft;
 
-    menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
-};
+    // Alternar entre carrosséis
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const project = button.dataset.project;
 
-// Animações GSAP para as seções
-const animateSections = () => {
-    const projectCards = document.querySelectorAll('.project-card');
-    if (projectCards.length === 0) {
-        console.warn('Nenhum elemento .project-card encontrado.');
-        return;
-    }
+            // Remover 'active' de todos os botões e carrosséis
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            carousels.forEach(carousel => carousel.classList.remove('active'));
 
-    gsap.from('.project-card', {
-        scrollTrigger: {
-            trigger: '.projects',
-            start: 'top center',
-            toggleActions: 'play none none reverse',
-        },
-        opacity: 0,
-        y: 50,
-        duration: 0.8,
-        stagger: 0.2,
+            // Adicionar 'active' ao botão e carrossel correspondente
+            button.classList.add('active');
+            document.querySelector(`.carousel[data-project="${project}"]`).classList.add('active');
+        });
     });
 
-    const serviceItems = document.querySelectorAll('.service-item');
-    if (serviceItems.length === 0) {
-        console.warn('Nenhum elemento .service-item encontrado.');
-        return;
-    }
+    // Função de clique e arraste para carrosséis
+    carousels.forEach(carousel => {
+        const container = carousel.querySelector('.carousel-container');
 
-    gsap.from('.service-item', {
-        scrollTrigger: {
-            trigger: '.services',
-            start: 'top center',
-            toggleActions: 'play none none reverse',
-        },
-        opacity: 0,
-        y: 50,
-        duration: 0.8,
-        stagger: 0.2,
-    });
-};
-
-// Form Validation
-const handleFormSubmission = () => {
-    const form = document.getElementById('contact-form');
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        let isValid = true;
-        form.querySelectorAll('input, textarea').forEach(input => {
-            if (!input.value.trim()) {
-                isValid = false;
-                input.style.borderColor = 'red';
-            } else {
-                input.style.borderColor = '';
-            }
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            container.classList.add('dragging');
+            startX = e.pageX - container.offsetLeft;
+            scrollLeft = container.scrollLeft;
         });
 
-        if (isValid) {
-            alert('Mensagem enviada com sucesso!');
-            form.reset();
-        }
-    });
-};
-
-// Criação de elementos animados
-const createStageElements = () => {
-    const stageElements = document.querySelector('.stage-elements');
-    if (!stageElements) {
-        console.error('Elemento .stage-elements não encontrado no DOM.');
-        return;
-    }
-
-    // Limpar conteúdo anterior
-    stageElements.innerHTML = '';
-
-    // Configurações gerais
-    const stageWidth = 800;
-    const stageHeight = 400;
-
-    // Criar o palco principal (base)
-    const stageBase = document.createElement('div');
-    stageBase.style.cssText = `
-      position: absolute;
-      width: ${stageWidth}px;
-      height: ${stageHeight}px;
-      background-color: #2a2a2a;
-      border-radius: 10px;
-      bottom: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
-    `;
-    stageElements.appendChild(stageBase);
-
-    // Adicionar cortinas
-    const createCurtain = (side) => {
-        const curtain = document.createElement('div');
-        curtain.style.cssText = `
-        position: absolute;
-        width: ${stageWidth / 4}px;
-        height: ${stageHeight}px;
-        background: linear-gradient(135deg, #ff3366, #cc0033);
-        ${side}: 0;
-        top: 0;
-        border-radius: 10px 0 0 10px;
-      `;
-        return curtain;
-    };
-    stageBase.appendChild(createCurtain('left'));
-    stageBase.appendChild(createCurtain('right'));
-
-    // Adicionar luzes
-    for (let i = 0; i < 3; i++) {
-        const light = document.createElement('div');
-        light.style.cssText = `
-        position: absolute;
-        width: 80px;
-        height: 80px;
-        background: radial-gradient(circle, rgba(255, 255, 0, 0.8), transparent);
-        border-radius: 50%;
-        top: -40px;
-        left: ${i * (stageWidth / 4) + stageWidth / 8 - 40}px;
-        animation: flicker 1s infinite alternate ease-in-out;
-      `;
-        stageBase.appendChild(light);
-    }
-
-    // Adicionar adereços
-    const props = ['#00ffcc', '#ffcc00', '#3366ff'];
-    for (let i = 0; i < 5; i++) {
-        const prop = document.createElement('div');
-        const size = Math.random() * 50 + 30;
-        prop.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        background-color: ${props[Math.floor(Math.random() * props.length)]};
-        border-radius: 50%;
-        bottom: 20px;
-        left: ${Math.random() * (stageWidth - size)}px;
-      `;
-        stageBase.appendChild(prop);
-
-        // Animação de leve movimentação
-        gsap.to(prop, {
-            y: Math.random() * 20 - 10,
-            repeat: -1,
-            yoyo: true,
-            duration: Math.random() * 2 + 1,
-            ease: 'sine.inOut',
+        container.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft;
+            const walk = (x - startX) * 1.5; // Ajuste de precisão do scroll
+            container.scrollLeft = scrollLeft - walk;
         });
-    }
-};
 
+        container.addEventListener('mouseup', () => {
+            isDragging = false;
+            container.classList.remove('dragging');
+        });
 
+        container.addEventListener('mouseleave', () => {
+            isDragging = false;
+            container.classList.remove('dragging');
+        });
 
-// Initialize 3D Stage Visualizer
-const initStageVisualizer = () => {
-    if (!THREE) {
-        console.error('Three.js não carregado!');
-        return;
-    }
+        // Suporte para dispositivos móveis
+        container.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].pageX - container.offsetLeft;
+            scrollLeft = container.scrollLeft;
+        });
 
-    const visualizer = new StageVisualizer();
-};
+        container.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const x = e.touches[0].pageX - container.offsetLeft;
+            const walk = (x - startX) * 1.2; // Ajuste de precisão do scroll para telas menores
+            container.scrollLeft = scrollLeft - walk;
+        });
 
-class StageVisualizer {
-    constructor() {
-        this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        this.renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('stage3D'), antialias: true });
-        this.init();
-    }
+        container.addEventListener('touchend', () => {
+            isDragging = false;
+        });
 
-    init() {
-        this.setupScene();
-        this.addLights();
-        this.createStage();
-        this.animate();
-        this.setupControls();
-    }
-
-    setupScene() {
-        this.renderer.setSize(this.renderer.domElement.clientWidth, this.renderer.domElement.clientHeight);
-        this.renderer.setClearColor(0x1a1a1a);
-        this.camera.position.z = 5;
-    }
-
-    addLights() {
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        this.scene.add(ambientLight);
-
-        const spotLight = new THREE.SpotLight(0xff3366, 1);
-        spotLight.position.set(0, 5, 5);
-        this.scene.add(spotLight);
-    }
-
-    createStage() {
-        const geometry = new THREE.BoxGeometry(4, 0.2, 3);
-        const material = new THREE.MeshPhongMaterial({ color: 0x2a2a2a });
-        this.stage = new THREE.Mesh(geometry, material);
-        this.scene.add(this.stage);
-    }
-
-    animate() {
-        requestAnimationFrame(() => this.animate());
-        this.renderer.render(this.scene, this.camera);
-    }
-
-    setupControls() {
-        document.querySelectorAll('.control-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const action = e.target.dataset.action;
-                if (this[action]) {
-                    this[action]();
-                } else {
-                    console.error(`Ação ${action} não implementada.`);
-                }
+        // Zoom nas imagens ao clicar
+        container.querySelectorAll('img').forEach(img => {
+            img.addEventListener('click', () => {
+                openImageInModal(img.src);
             });
         });
-    }
+    });
 
-    rotate() {
-        gsap.to(this.stage.rotation, {
-            y: this.stage.rotation.y + Math.PI * 2,
-            duration: 2,
-            ease: 'power2.inOut'
+    // Função para abrir a imagem em uma modal (ampliação)
+    const openImageInModal = (src) => {
+        // Criar o modal
+        const modal = document.createElement('div');
+        modal.classList.add('image-modal');
+        modal.innerHTML = `
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <img src="${src}" alt="Imagem ampliada">
+        </div>
+      `;
+        document.body.appendChild(modal);
+
+        // Fechar o modal ao clicar no botão de fechar
+        modal.querySelector('.close-modal').addEventListener('click', () => {
+            modal.remove();
         });
-    }
 
-    lights() {
-        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-        this.scene.traverse((object) => {
-            if (object.isLight) {
-                object.color.set(`#${randomColor}`);
+        // Fechar o modal ao clicar fora da imagem
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.remove();
+        });
+    };
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('projectCanvas');
+    const ctx = canvas.getContext('2d');
+    const buttons = document.querySelectorAll('.scene-btn');
+
+    // Definir dimensões do canvas
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
+    // Mapeamento dos botões para as imagens
+    const images = {
+        'scene-btn1': 'img/projeto1.jpg', // Caminho para a imagem 1
+        'scene-btn2': 'img/portifolio1.jpg', // Caminho para a imagem 2
+        'scene-btn3': 'img/portifolio3.jpg', // Caminho para a imagem 3
+    };
+
+    // Função para carregar e desenhar a imagem no canvas com transição
+    const loadAndDrawImage = (imageSrc) => {
+        // Iniciar fade-out
+        canvas.style.transition = 'opacity 0.5s ease';
+        canvas.style.opacity = 0; // Tornar o canvas invisível
+
+        setTimeout(() => {
+            const img = new Image();
+            img.src = imageSrc;
+
+            img.onload = () => {
+                // Limpar o canvas antes de desenhar a nova imagem
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Desenhar a imagem no canvas
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                // Iniciar fade-in
+                canvas.style.opacity = 1; // Tornar o canvas visível novamente
+            };
+
+            img.onerror = () => {
+                console.error('Erro ao carregar a imagem:', imageSrc);
+                canvas.style.opacity = 1; // Restaurar visibilidade em caso de erro
+            };
+        }, 500); // Tempo do fade-out (em ms)
+    };
+
+    // Adicionar evento de clique para cada botão
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const imageSrc = images[button.id]; // Obtém o caminho da imagem correspondente
+            if (imageSrc) {
+                loadAndDrawImage(imageSrc); // Carrega e desenha a imagem no canvas
             }
         });
-        console.log(`Cor da luz alterada para: #${randomColor}`);
-    }
+    });
 
-    props() {
-        const geometry = new THREE.SphereGeometry(0.2, 32, 32);
-        const material = new THREE.MeshPhongMaterial({ color: 0xff3366 });
-        const sphere = new THREE.Mesh(geometry, material);
-        sphere.position.set(Math.random() * 4 - 2, 0.5, Math.random() * 4 - 2);
-        this.scene.add(sphere);
-        console.log('Novo prop adicionado à cena.');
-    }
-}
+    // Carregar a primeira imagem como padrão
+    loadAndDrawImage(images['scene-btn1']);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const videoItems = document.querySelectorAll('.video-item video');
+    const modal = document.getElementById('videoModal');
+    const modalContent = modal.querySelector('.modal-content');
+    const expandedVideo = document.getElementById('expandedVideo');
+    const closeModalButton = modal.querySelector('.close-modal');
+
+    // Abre o modal ao clicar em um vídeo
+    videoItems.forEach(video => {
+        video.addEventListener('click', () => {
+            const source = video.querySelector('source').src;
+            expandedVideo.src = source; // Define a fonte do vídeo no modal
+            modal.classList.add('active');
+        });
+    });
+
+    // Fecha o modal
+    closeModalButton.addEventListener('click', () => {
+        modal.classList.remove('active');
+        expandedVideo.pause(); // Pausa o vídeo ao fechar o modal
+        expandedVideo.src = ''; // Limpa a fonte do vídeo
+    });
+
+    // Fecha o modal clicando fora do vídeo
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+            expandedVideo.pause();
+            expandedVideo.src = '';
+        }
+    });
+});
+
+

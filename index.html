@@ -1,8 +1,9 @@
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StageArt Cenografia - Experiências Interativas</title>
+  <title>RW Cenografia - Experiências Interativas</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -10,14 +11,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
+
 <body>
   <nav>
     <div class="logo">
       <svg viewBox="0 0 100 100" width="50" height="50">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#fff" stroke-width="2"/>
-        <path d="M30 70 L50 30 L70 70" fill="none" stroke="#fff" stroke-width="2"/>
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#fff" stroke-width="2" />
+        <path d="M30 70 L50 30 L70 70" fill="none" stroke="#fff" stroke-width="2" />
       </svg>
-      <span>StageArt</span>
+      <span>RW Cenografia</span>
     </div>
     <div class="menu-toggle">
       <i class="fas fa-bars"></i>
@@ -30,25 +32,19 @@
     </ul>
   </nav>
 
-  <header id="inicio">
-    <div class="hero">
+  <header id="inicio"
+    style="background-image: url('img/portifolio3.jpg'); background-size: cover; background-position: center; position: relative; color: var(--text-color);">
+    <div class="hero" style="position: relative; padding: 2rem; text-align: center; z-index: 2;">
       <h1>Transformando Espaços em Experiências</h1>
       <p>Cenografia inovadora para eventos, teatro e produções</p>
-      <div class="stage-visualizer">
-        <canvas id="stage3D"></canvas>
-        <div class="stage-controls">
-          <button class="control-btn" data-action="rotate">Girar Palco</button>
-          <button class="control-btn" data-action="lights">Mudar Luzes</button>
-          <button class="control-btn" data-action="props">Adicionar Props</button>
-        </div>
-      </div>
-      
       <div class="cta-buttons">
         <a href="#projetos" class="cta-primary">Ver Projetos</a>
         <a href="#contato" class="cta-secondary">Fale Conosco</a>
       </div>
     </div>
-    <div class="particles"></div>
+    <div class="particles"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1;">
+    </div>
   </header>
 
   <section id="projetos" class="projects">
@@ -59,19 +55,55 @@
           <canvas id="projectCanvas"></canvas>
           <div class="scene-overlay">
             <div class="scene-controls">
-              <button class="scene-btn" data-view="front">Frontal</button>
-              <button class="scene-btn" data-view="top">Superior</button>
-              <button class="scene-btn" data-view="side">Lateral</button>
+              <button class="scene-btn" id="scene-btn1" data-view="front">ETC</button>
+              <button class="scene-btn" id="scene-btn2" data-view="top">ETC</button>
+              <button class="scene-btn" id="scene-btn3" data-view="side">ETC</button>
+              <button class="scene-btn" id="scene-btn2" data-view="top">ETC</button>
+              <button class="scene-btn" id="scene-btn3" data-view="side">ETC</button>
             </div>
           </div>
         </div>
         <div class="project-info">
           <div class="project-tabs">
-            <button class="tab-btn active" data-project="teatro">Teatro</button>
-            <button class="tab-btn" data-project="eventos">Eventos</button>
-            <button class="tab-btn" data-project="shows">Shows</button>
+            <button class="tab-btn active" data-project="teatro">Toyota</button>
+            <button class="tab-btn" data-project="eventos">Mate Leão</button>
+            <button class="tab-btn" data-project="shows">Sbt</button>
+            <button class="tab-btn active" data-project="teatro">Toyota</button>
+            <button class="tab-btn" data-project="eventos">Mate Leão</button>
+            <button class="tab-btn" data-project="shows">Sbt</button>
           </div>
-          <div class="project-details"></div>
+          <div class="project-details">
+            <!-- Carrossel para Teatro -->
+            <div class="carousel active" data-project="teatro">
+              <div class="carousel-container">
+                <img src="img/portifolio1.jpg" alt="Teatro Projeto 1">
+                <img src="img/portifolio1.jpg" alt="Teatro Projeto 2">
+                <img src="img/portifolio1.jpg" alt="Teatro Projeto 3">
+                <img src="img/portifolio1.jpg" alt="Teatro Projeto 1">
+                <img src="img/portifolio1.jpg" alt="Teatro Projeto 2">
+                <img src="img/portifolio1.jpg" alt="Teatro Projeto 3">
+                <img src="img/portifolio1.jpg" alt="Teatro Projeto 1">
+                <img src="img/portifolio1.jpg" alt="Teatro Projeto 2">
+                <img src="img/portifolio1.jpg" alt="Teatro Projeto 3">
+              </div>
+            </div>
+            <!-- Carrossel para Eventos -->
+            <div class="carousel" data-project="eventos">
+              <div class="carousel-container">
+                <img src="img/portifolio2.jpg" alt="Evento Projeto 1">
+                <img src="img/portifolio2.jpg" alt="Evento Projeto 2">
+                <img src="img/portifolio2.jpg" alt="Evento Projeto 3">
+              </div>
+            </div>
+            <!-- Carrossel para Shows -->
+            <div class="carousel" data-project="shows">
+              <div class="carousel-container">
+                <img src="img/portifolio3.jpg" alt="Show Projeto 1">
+                <img src="img/portifolio3.jpg" alt="Show Projeto 2">
+                <img src="img/portifolio3.jpg" alt="Show Projeto 3">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -80,113 +112,119 @@
   <section id="servicos" class="services">
     <h2>Nossos Serviços</h2>
     <div class="services-container">
-      <div class="service-item" data-tilt>
+      <div class="service-item">
         <div class="service-card">
           <div class="card-front">
             <i class="fas fa-pencil-ruler"></i>
             <h3>Design de Cenários</h3>
           </div>
           <div class="card-back">
-            <p>Explore nossas criações em 3D</p>
-            <div class="interactive-preview"></div>
+            <h3>Design de Cenários</h3>
+            <p>Explore nossas criações em 3D com tecnologia de ponta e design inovador.</p>
           </div>
         </div>
       </div>
-      <div class="service-item" data-tilt>
+      <div class="service-item">
         <div class="service-card">
           <div class="card-front">
             <i class="fas fa-tools"></i>
             <h3>Produção</h3>
           </div>
           <div class="card-back">
-            <p>Descubra como fabricamos nossas estruturas</p>
-            <div class="interactive-preview"></div>
+            <h3>Produção</h3>
+            <p>Conheça os processos de fabricação e montagem das nossas estruturas.</p>
           </div>
         </div>
       </div>
-      <div class="service-item" data-tilt>
+      <div class="service-item">
         <div class="service-card">
           <div class="card-front">
             <i class="fas fa-lightbulb"></i>
             <h3>Iluminação Cênica</h3>
           </div>
           <div class="card-back">
-            <p>Veja como projetamos a iluminação para nossos espetáculos</p>
-            <div class="interactive-preview"></div>
+            <h3>Iluminação Cênica</h3>
+            <p>Veja como projetamos iluminação para criar atmosferas únicas.</p>
           </div>
         </div>
       </div>
-      <div class="service-item" data-tilt>
+      <div class="service-item">
         <div class="service-card">
           <div class="card-front">
             <i class="fas fa-paint-brush"></i>
             <h3>Arte Final</h3>
           </div>
           <div class="card-back">
-            <p>Conheça nossos artistas e seus processos criativos</p>
-            <div class="interactive-preview"></div>
+            <h3>Arte Final</h3>
+            <p>Descubra nossos artistas e o processo criativo por trás das nossas produções.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="experiencia" class="experience">
-    <h2>Crie Sua Cenografia</h2>
-    <div class="stage-builder">
-      <div class="tools-panel">
-        <div class="tool-group">
-          <h3>Elementos</h3>
-          <div class="tool-items">
-            <div class="tool-item" data-type="curtain">
-              <i class="fas fa-curtain"></i>
-              <span>Cortina</span>
-            </div>
-            <div class="tool-item" data-type="light">
-              <i class="fas fa-lightbulb"></i>
-              <span>Iluminação</span>
-            </div>
-            <div class="tool-item" data-type="prop">
-              <i class="fas fa-cube"></i>
-              <span>Objetos</span>
-            </div>
-          </div>
-        </div>
-        <div class="color-palette">
-          <h3>Cores</h3>
-          <div class="color-swatches"></div>
-        </div>
+  <section id="galeria" class="video-gallery">
+    <h2>Nossos Vídeos</h2>
+    <div class="gallery-container">
+      <div class="video-item" data-title="Exploração Cenográfica">
+        <video muted autoplay loop>
+          <source src="videos/1.mp4" type="video/mp4">
+          Seu navegador não suporta vídeos HTML5.
+        </video>
       </div>
-      <div class="stage-canvas">
-        <canvas id="builderCanvas"></canvas>
-        <div class="canvas-controls">
-          <button class="canvas-btn" data-action="undo">
-            <i class="fas fa-undo"></i>
-          </button>
-          <button class="canvas-btn" data-action="redo">
-            <i class="fas fa-redo"></i>
-          </button>
-          <button class="canvas-btn" data-action="save">
-            <i class="fas fa-save"></i>
-          </button>
-        </div>
+      <div class="video-item" data-title="Inovação em Luzes">
+        <video muted autoplay loop>
+          <source src="videos/2.mp4" type="video/mp4">
+          Seu navegador não suporta vídeos HTML5.
+        </video>
       </div>
-      <div class="properties-panel">
-        <h3>Propriedades</h3>
-        <div class="properties-content"></div>
+      <div class="video-item" data-title="Produções Criativas">
+        <video muted autoplay loop>
+          <source src="videos/3.mp4" type="video/mp4">
+          Seu navegador não suporta vídeos HTML5.
+        </video>
+      </div>
+      <div class="video-item" data-title="Transformação de Espaços">
+        <video muted autoplay loop>
+          <source src="videos/4.mp4" type="video/mp4">
+          Seu navegador não suporta vídeos HTML5.
+        </video>
       </div>
     </div>
-  </section>
+    <!-- Modal para vídeos -->
+    <div class="video-modal" id="videoModal">
+      <div class="modal-content">
+        <button class="close-modal">&times;</button>
+        <video id="expandedVideo" controls autoplay>
+          <source src="" type="video/mp4">
+          Seu navegador não suporta vídeos HTML5.
+        </video>
+      </div>
+    </div>
+  </section> 
 
   <section id="contato" class="contact">
     <h2>Entre em Contato</h2>
+    <p class="contact-description">Tem alguma dúvida ou gostaria de trabalhar conosco? Preencha o formulário abaixo ou entre em contato diretamente.</p>
     <div class="contact-container">
+      <!-- Formulário de Contato -->
       <form id="contact-form">
-        <input type="text" placeholder="Nome" required>
-        <input type="email" placeholder="Email" required>
-        <textarea placeholder="Mensagem" required></textarea>
+        <div class="form-group">
+          <input type="text" id="name" required>
+          <label for="name">Nome</label>
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" required>
+          <label for="email">Email</label>
+        </div>
+        <div class="form-group">
+          <textarea id="message" required></textarea>
+          <label for="message">Mensagem</label>
+        </div>
         <button type="submit">Enviar Mensagem</button>
       </form>
+  
+      <!-- Informações de Contato -->
       <div class="contact-info">
         <div class="info-item">
           <i class="fas fa-map-marker-alt"></i>
@@ -194,34 +232,61 @@
         </div>
         <div class="info-item">
           <i class="fas fa-phone"></i>
-          <p>+55 11 99999-9999</p>
+          <p>(11) 99999-9999</p>
         </div>
         <div class="info-item">
           <i class="fas fa-envelope"></i>
-          <p>contato@stageart.com</p>
+          <p>comercial@rwcenografia.com.br</p>
         </div>
       </div>
     </div>
-  </section>
+  </section>  
 
   <footer>
     <div class="footer-content">
+      <!-- Logo e Nome da Empresa -->
       <div class="footer-logo">
         <svg viewBox="0 0 100 100" width="40" height="40">
-          <circle cx="50" cy="50" r="45" fill="none" stroke="#fff" stroke-width="2"/>
-          <path d="M30 70 L50 30 L70 70" fill="none" stroke="#fff" stroke-width="2"/>
+          <circle cx="50" cy="50" r="45" fill="none" stroke="#fff" stroke-width="2" />
+          <path d="M30 70 L50 30 L70 70" fill="none" stroke="#fff" stroke-width="2" />
         </svg>
-        <span>StageArt</span>
+        <span>RW Cenografia</span>
       </div>
+  
+      <!-- Links Sociais -->
       <div class="social-links">
-        <a href="https://facebook.com"><i class="fab fa-facebook"></i></a>
-        <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
-        <a href="https://linkedin.com"><i class="fab fa-linkedin"></i></a>
+        <a href="https://facebook.com" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="https://instagram.com" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://linkedin.com" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
       </div>
     </div>
-    <p>&copy; 2023 StageArt Cenografia. Todos os direitos reservados.</p>
+  
+    <!-- Informações Adicionais -->
+    <div class="footer-info">
+      <div class="info-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <p>Av. Principal, 1000<br>São Paulo - SP</p>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-phone"></i>
+        <p>(11) 99999-9999</p>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-envelope"></i>
+        <p>comercial@rwcewnografia.com.br</p>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-clock"></i>
+        <p>Seg - Sex: 9h - 18h<br>Sáb: 10h - 14h</p>
+      </div>
+    </div>
+  
+    <!-- Direitos Reservados -->
+    <p>&copy; 2025 RW Cenografia. Todos os direitos reservados.</p>
   </footer>
+  
 
   <script src="script.js"></script>
 </body>
+
 </html>
