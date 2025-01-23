@@ -1,0 +1,227 @@
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StageArt Cenografia - Experiências Interativas</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <nav>
+    <div class="logo">
+      <svg viewBox="0 0 100 100" width="50" height="50">
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#fff" stroke-width="2"/>
+        <path d="M30 70 L50 30 L70 70" fill="none" stroke="#fff" stroke-width="2"/>
+      </svg>
+      <span>StageArt</span>
+    </div>
+    <div class="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+
+  <header id="inicio">
+    <div class="hero">
+      <h1>Transformando Espaços em Experiências</h1>
+      <p>Cenografia inovadora para eventos, teatro e produções</p>
+      <div class="stage-visualizer">
+        <canvas id="stage3D"></canvas>
+        <div class="stage-controls">
+          <button class="control-btn" data-action="rotate">Girar Palco</button>
+          <button class="control-btn" data-action="lights">Mudar Luzes</button>
+          <button class="control-btn" data-action="props">Adicionar Props</button>
+        </div>
+      </div>
+      
+      <div class="cta-buttons">
+        <a href="#projetos" class="cta-primary">Ver Projetos</a>
+        <a href="#contato" class="cta-secondary">Fale Conosco</a>
+      </div>
+    </div>
+    <div class="particles"></div>
+  </header>
+
+  <section id="projetos" class="projects">
+    <h2>Projetos em Destaque</h2>
+    <div class="project-showcase">
+      <div class="project-viewer">
+        <div class="scene-container">
+          <canvas id="projectCanvas"></canvas>
+          <div class="scene-overlay">
+            <div class="scene-controls">
+              <button class="scene-btn" data-view="front">Frontal</button>
+              <button class="scene-btn" data-view="top">Superior</button>
+              <button class="scene-btn" data-view="side">Lateral</button>
+            </div>
+          </div>
+        </div>
+        <div class="project-info">
+          <div class="project-tabs">
+            <button class="tab-btn active" data-project="teatro">Teatro</button>
+            <button class="tab-btn" data-project="eventos">Eventos</button>
+            <button class="tab-btn" data-project="shows">Shows</button>
+          </div>
+          <div class="project-details"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicos" class="services">
+    <h2>Nossos Serviços</h2>
+    <div class="services-container">
+      <div class="service-item" data-tilt>
+        <div class="service-card">
+          <div class="card-front">
+            <i class="fas fa-pencil-ruler"></i>
+            <h3>Design de Cenários</h3>
+          </div>
+          <div class="card-back">
+            <p>Explore nossas criações em 3D</p>
+            <div class="interactive-preview"></div>
+          </div>
+        </div>
+      </div>
+      <div class="service-item" data-tilt>
+        <div class="service-card">
+          <div class="card-front">
+            <i class="fas fa-tools"></i>
+            <h3>Produção</h3>
+          </div>
+          <div class="card-back">
+            <p>Descubra como fabricamos nossas estruturas</p>
+            <div class="interactive-preview"></div>
+          </div>
+        </div>
+      </div>
+      <div class="service-item" data-tilt>
+        <div class="service-card">
+          <div class="card-front">
+            <i class="fas fa-lightbulb"></i>
+            <h3>Iluminação Cênica</h3>
+          </div>
+          <div class="card-back">
+            <p>Veja como projetamos a iluminação para nossos espetáculos</p>
+            <div class="interactive-preview"></div>
+          </div>
+        </div>
+      </div>
+      <div class="service-item" data-tilt>
+        <div class="service-card">
+          <div class="card-front">
+            <i class="fas fa-paint-brush"></i>
+            <h3>Arte Final</h3>
+          </div>
+          <div class="card-back">
+            <p>Conheça nossos artistas e seus processos criativos</p>
+            <div class="interactive-preview"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experiencia" class="experience">
+    <h2>Crie Sua Cenografia</h2>
+    <div class="stage-builder">
+      <div class="tools-panel">
+        <div class="tool-group">
+          <h3>Elementos</h3>
+          <div class="tool-items">
+            <div class="tool-item" data-type="curtain">
+              <i class="fas fa-curtain"></i>
+              <span>Cortina</span>
+            </div>
+            <div class="tool-item" data-type="light">
+              <i class="fas fa-lightbulb"></i>
+              <span>Iluminação</span>
+            </div>
+            <div class="tool-item" data-type="prop">
+              <i class="fas fa-cube"></i>
+              <span>Objetos</span>
+            </div>
+          </div>
+        </div>
+        <div class="color-palette">
+          <h3>Cores</h3>
+          <div class="color-swatches"></div>
+        </div>
+      </div>
+      <div class="stage-canvas">
+        <canvas id="builderCanvas"></canvas>
+        <div class="canvas-controls">
+          <button class="canvas-btn" data-action="undo">
+            <i class="fas fa-undo"></i>
+          </button>
+          <button class="canvas-btn" data-action="redo">
+            <i class="fas fa-redo"></i>
+          </button>
+          <button class="canvas-btn" data-action="save">
+            <i class="fas fa-save"></i>
+          </button>
+        </div>
+      </div>
+      <div class="properties-panel">
+        <h3>Propriedades</h3>
+        <div class="properties-content"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" class="contact">
+    <h2>Entre em Contato</h2>
+    <div class="contact-container">
+      <form id="contact-form">
+        <input type="text" placeholder="Nome" required>
+        <input type="email" placeholder="Email" required>
+        <textarea placeholder="Mensagem" required></textarea>
+        <button type="submit">Enviar Mensagem</button>
+      </form>
+      <div class="contact-info">
+        <div class="info-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <p>Av. Principal, 1000<br>São Paulo - SP</p>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-phone"></i>
+          <p>+55 11 99999-9999</p>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-envelope"></i>
+          <p>contato@stageart.com</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <svg viewBox="0 0 100 100" width="40" height="40">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="#fff" stroke-width="2"/>
+          <path d="M30 70 L50 30 L70 70" fill="none" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <span>StageArt</span>
+      </div>
+      <div class="social-links">
+        <a href="https://facebook.com"><i class="fab fa-facebook"></i></a>
+        <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
+        <a href="https://linkedin.com"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+    <p>&copy; 2023 StageArt Cenografia. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
